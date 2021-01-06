@@ -28,15 +28,7 @@ function isValidEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-//確認密碼長度
 
-function checkLength (input , min , max){
-    if(input.value.length<min){
-        showError(input,'must be at least '+min+ ' characters');
-    }else if (input.value.length>max){
-        showError(input,'must be less then '+max+ ' characters');
-    }
-}
 
 
 //確認密碼是否吻合
@@ -44,6 +36,8 @@ function checkLength (input , min , max){
 function checkpassword (input1 , input2){
     if(input1.value !== input2.value){
         showError(input2,'password is not match');
+    }else if(input1.value == input2.value){
+        showSuccess(password2);
     }
 }
 
@@ -53,6 +47,49 @@ function checkpassword (input1 , input2){
 // preventDefault 將預設為空 要不然會執行基本提交動作
 form.addEventListener('keyup',function(e){
     e.preventDefault()
+    
+    if(username.value.length > 0){
+        if(username.value.length<3){
+            showError(username,'must be at least '+3+ ' characters');
+        }else if (username.value.length>15){
+            showError(username,'must be less then '+15+ ' characters');
+        }else if (username.value.length>=3){
+            showSuccess(username);
+        }
+
+    }
+
+    if(email.value.length > 0){
+        if(email.value === '' ){
+            showError(email,'email is required');
+        }else if (!isValidEmail(email.value)){
+            showError(email,'Email is not valid');
+        }else{
+            showSuccess(email);
+        }
+    }
+
+    if(password.value.length > 0){
+        if(password.value.length<3){
+            showError(password,'must be at least '+8+ ' characters');
+        }else if (password.value.length>16){
+            showError(password,'must be less then '+16+ ' characters');
+        }else if (password.value.length>=8){
+            showSuccess(password);
+        }
+
+    }
+
+    if(password2.value.length > 0){
+        checkpassword (password , password2);
+    }
+
+})
+
+
+
+form.addEventListener('submit',function(e){
+    
     
     if(username.value === '' ){
         showError(username,'Username is required');
@@ -87,7 +124,6 @@ checkLength(password,8 , 16);
 
 
 })
-
 
 
 
